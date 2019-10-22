@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<data>
+    <resources>_res/</resources>
+    <textures>
+        <texture>
+            <name>player</name>
+        </texture>
+        <texture>
+            <name>floor</name>
+        </texture>
+        <texture>
+            <name>floor3</name>
+        </texture>
+        <texture>
+            <name>floor4</name>
+        </texture>
+        <texture>
+            <name>floor5</name>
+        </texture>
+        <texture>
+            <name>background</name>
+        </texture>
+        <texture>
+            <name>foreground</name>
+        </texture>
+        <texture>
+            <name>pistol</name>
+        </texture>
+        <texture>
+            <name>shotgun</name>
+        </texture>
+    </textures>
+    <sounds>
+        <sound>
+            <name>walk</name>
+        </sound>
+        <sound>
+            <name>gunshot</name>
+        </sound>
+    </sounds>
+    <guns>
+        <gun>
+            <name>pistol_1</name>
+            <type>Shotgun</type>
+            <texture>shotgun</texture>
+            <bulletDamage>1</bulletDamage>
+            <bulletNumber>10000</bulletNumber>
+            <magazineSize>8</magazineSize>
+            <bulletSpeed>1500</bulletSpeed>
+            <reloadTime>3.3</reloadTime>
+            <shootDelay>.5</shootDelay>
+            <shootSound>gunshot</shootSound>
+        </gun>
+        <gun>
+            <name>pistol_2</name>
+            <type>Pistol</type>
+            <texture>pistol</texture>
+            <bulletDamage>1</bulletDamage>
+            <bulletNumber>10000</bulletNumber>
+            <magazineSize>8</magazineSize>
+            <bulletSpeed>1500</bulletSpeed>
+            <reloadTime>0</reloadTime>
+            <shootDelay>2</shootDelay>
+            <shootSound>gunshot</shootSound>
+        </gun>
+    </guns>
+    <player>
+        <name>player</name>
+        <texture>player</texture>
+        <posX>.5</posX>
+        <posZ>.5</posZ>
+        <health>15</health>
+        <gun>
+            <name>pistol_2</name>
+            <offsetX>38</offsetX>
+            <offsetY>70</offsetY>
+        </gun>
+        <walkSound>walk</walkSound>
+    </player>
+    <level>
+        <floors>
+            <floor>
+                <length>2</length>
+                <texture>floor3</texture>
+            </floor>
+            <floor>
+                <length>1</length>
+                <texture>floor4</texture>
+            </floor>
+            <floor>
+                <length>1</length>
+                <texture>floor3</texture>
+            </floor>
+            <floor>
+                <length>2</length>
+                <texture>floor5</texture>
+            </floor>
+            <floor>
+                <length>1</length>
+                <texture>floor3</texture>
+            </floor>
+        </floors>
+        <backgrounds>
+            <background>
+                <length>2</length>
+                <texture>background</texture>
+            </background>
+        </backgrounds>
+        <foregrounds>
+            <foreground>
+                <length>2</length>
+                <texture>foreground</texture>
+            </foreground>
+        </foregrounds>
+        <entities>
+            <gunHolder>
+                <posX>.8</posX>
+                <posZ>.5</posZ>
+                <gun>
+                    <name>pistol_2</name>
+                </gun>
+            </gunHolder>
+            <enemy>
+                <name>enemy2</name>
+                <texture>player</texture>
+                <posX>2</posX>
+                <posZ>.5</posZ>
+                <health>3</health>
+                <gun>
+                    <name>pistol_2</name>
+                    <offsetX>38</offsetX>
+                    <offsetY>70</offsetY>
+                </gun>
+            </enemy>
+            <enemy>
+                <name>enemy1</name> <!-- optional, used for events -->
+                <texture>player</texture>
+                <posX>5</posX>
+                <posZ>.5</posZ>
+                <health>5</health>
+                <gun>
+                    <name>pistol_1</name>
+                    <offsetX>38</offsetX>
+                    <offsetY>70</offsetY>
+                </gun>
+            </enemy>
+        </entities>
+    </level>
+    <events>
+        <event>
+            <type>textPause</type>
+            <on>
+                <entityName>player</entityName>
+                <attributeName>health</attributeName>
+                <value mode="le" scaled="1">0</value>
+            </on>
+            <effects>
+                <exitGame />
+            </effects>
+            <data>
+                <text>
+                    You died.
+                </text>
+                <cameraPos>5</cameraPos>
+            </data>
+        </event>
+        <event>
+            <type>textPause</type>
+            <on>
+                <entityName>player</entityName>
+                <attributeName>posX</attributeName>
+                <value mode="ge" scaled="1">.6</value>
+            </on>
+            <data>
+                <text>
+                    I shall kill you!
+                </text>
+                <cameraPos>5</cameraPos>
+            </data>
+        </event>
+        <event>
+            <type>instantEvent</type>
+            <on>
+                <entityName>enemy2</entityName>
+                <attributeName>dead</attributeName>
+                <value mode="eq" scaled="0">True</value>
+            </on>
+            <effects>
+                <spawnEntity>
+                    <gunHolder>
+                        <posX>2</posX>
+                        <posZ>.5</posZ>
+                        <gun>
+                            <name>pistol_1</name>
+                        </gun>
+                    </gunHolder>
+                </spawnEntity>
+            </effects>
+        </event>
+        <event>
+            <type>instantEvent</type>
+            <on>
+                <entityName>enemy1</entityName>
+                <attributeName>health</attributeName>
+                <value mode="le" scaled="0">3</value>
+            </on>
+            <effects>
+                <spawnEntity>
+                    <enemy>
+                        <texture>player</texture>
+                        <posX>5.25</posX>
+                        <posZ>.1</posZ>
+                        <health>1</health>
+                        <gun>
+                            <name>pistol_2</name>
+                            <offsetX>38</offsetX>
+                            <offsetY>70</offsetY>
+                        </gun>
+                    </enemy>
+                    <enemy>
+                        <texture>player</texture>
+                        <posX>5.25</posX>
+                        <posZ>.9</posZ>
+                        <health>1</health>
+                        <gun>
+                            <name>pistol_2</name>
+                            <offsetX>38</offsetX>
+                            <offsetY>70</offsetY>
+                        </gun>
+                    </enemy>
+                </spawnEntity>
+            </effects>
+        </event>
+        <event>
+            <type>textPause</type>
+            <on>
+                <entityName>enemy1</entityName>
+                <attributeName>dead</attributeName>
+                <value mode="eq" scaled="0">True</value>
+            </on>
+            <effects>
+                <exitGame />
+            </effects>
+            <data>
+                <text> <!-- Max 63 chars in line -->
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus rhoncus molestie ultricies.
+                    Sed dolor nibh, tempor eu nibh et, ultricies porttitor nulla.
+                    Pellentesque pharetra nunc sed est ornare,
+                    sed elementum est rhoncus.
+                    Integer sollicitudin augue in tortor blandit,
+                    eget malesuada nibh euismod.
+                    Suspendisse vestibulum interdum orci,
+                    eget suscipit lorem molestie vel.
+                    Aliquam eu nibh tincidunt, fringilla quam non, eleifend velit.
+                    Cras id iaculis turpis. In dui est, vulputate eget justo et,
+                    tincidunt dictum massa.
+                </text>
+            </data>
+        </event>
+    </events>
+</data>
